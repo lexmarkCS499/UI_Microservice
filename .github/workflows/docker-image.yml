@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push Docker Image, and Deploy to Minikube
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main  # Run the workflow when code is pushed to the main branch
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -38,3 +38,28 @@ jobs:
         run: |
           docker tag hkabshire/uiservice:${{ github.sha }} hkabshire/uiservice:latest
           docker push hkabshire/uiservice:latest
+
+      # Step 6: Set up kubectl
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v2
+        with:
+          version: '1.24.0'  # Specify the version of kubectl you want to use
+
+      # Step 7: Set up Minikube
+      - name: Set up Minikube
+        run: |
+          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+          sudo install minikube-linux-amd64 /usr/local/bin/minikube
+          minikube start --driver=docker
+
+      # Step 8: Configure kubectl to use Minikube
+      - name: Configure kubectl
+        run: |
+          kubectl config set-cluster minikube --server=https://kubernetes.docker.internal:8443
+          kubectl config set-context minikube --cluster=minikube --user=minikube
+          kubectl config use-context minikube
+
+      # Step 9: Deploy to Kubernetes
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml --namespace=dev
