@@ -27,14 +27,14 @@ jobs:
 
       # Step 4: Build the Docker image
       - name: Build Docker Image
-        run: docker build -t hkabshire/uiservice:${{ github.sha }} .
+        run: docker build -t lexmarkkubernetes/uiservice:${{ github.sha }} .
 
       # Step 5: Push the Docker image to Docker Hub
       - name: Push Docker Image
-        run: docker push hkabshire/uiservice:${{ github.sha }}
+        run: docker push lexmarkkubernetes/uiservice:${{ github.sha }}
 
       # Optional: Tag the image with `latest` and push
       - name: Tag Image with latest
         run: |
-          docker tag hkabshire/uiservice:${{ github.sha }} hkabshire/uiservice:latest
-          docker push hkabshire/uiservice:latest
+          docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:latest
+          docker push lexmarkkubernetes/uiservice:latest
