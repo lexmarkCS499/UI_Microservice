@@ -2,16 +2,16 @@
 FROM node:18 AS build
 
 # Step 2: Set working directory inside the container
-WORKDIR /uiservice
+WORKDIR /client
 
 # Step 3: Copy package.json and package-lock.json to the container
-COPY /uiservice/package*.json ./
+COPY /client/package*.json ./
 
 # Step 4: Install dependencies
 RUN npm install
 
 # Step 5: Copy the entire project to the working directory
-COPY uiservice/ ./
+COPY client/ ./
 
 # Step 6: Build the React app for production
 RUN npm run build
@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Step 8: Copy the build output to the NGINX web root directory
-COPY --from=build /uiservice/build /usr/share/nginx/html
+COPY --from=build /client/build /usr/share/nginx/html
 
 # Step 9: Expose port 80 for the app
 EXPOSE 80
