@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push Docker Image, and Deploy to Minikube
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main  # Run the workflow when code is pushed to the main branch
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
