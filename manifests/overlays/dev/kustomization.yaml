@@ -5,6 +5,9 @@ kind: Kustomization
 resources:
   - ../../base # Reference the base resources
 
-# Optionally, add environment-specific patches or configurations
-patchesStrategicMerge:
-  - deployment-patch.yaml # If you have a patch for the deployment
+patches:
+  - target:
+      kind: Deployment
+      name: ui-app
+      version: v1
+    path: deployment-patch.yaml
