@@ -1,18 +1,10 @@
-# deployment-patch.yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: your-service
-spec:
-  replicas: 1  # Scale up for production
-  template:
-    spec:
-      containers:
-        - name: your-service-container
-          resources:
-            limits:
-              memory: "1Gi"
-              cpu: "1000m"
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
+# k8s/overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base # Reference the base resources
+
+# Optionally, add environment-specific patches or configurations
+patchesStrategicMerge:
+  - deployment-patch.yaml # If you have a patch for the deployment

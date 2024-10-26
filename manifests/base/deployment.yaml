@@ -1,34 +1,19 @@
-# deployment.yaml (in k8s/base)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ui-service
-  labels:
-    app: ui-service
+  name: my-app
 spec:
-  replicas: 1  # Number of pod replicas
+  replicas: 1
   selector:
     matchLabels:
-      app: ui-service
+      app: ui-app
   template:
     metadata:
       labels:
-        app: ui-service
+        app: ui-app
     spec:
       containers:
-        - name: ui-service-container
-          image: docker.io/lexmarkkubernetes/uiservice:latest
+        - name: ui-app
+          image: lexmarkkubernetes/ui-app:latest
           ports:
             - containerPort: 80
-          env:
-            - name: ENVIRONMENT
-              value: "dev"
-            - name: API_URL
-              value: "http://api-service.default.svc.cluster.local"
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "250m"

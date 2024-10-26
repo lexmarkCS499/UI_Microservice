@@ -38,3 +38,9 @@ jobs:
         run: |
           docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:latest
           docker push lexmarkkubernetes/uiservice:latest
+
+      # Step 6: Tag Image with `dev` and push
+      - name: Tag Image with dev
+        run: |
+          docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:dev
+          docker push lexmarkkubernetes/uiservice:dev
