@@ -1,0 +1,14 @@
+# service.yaml (in k8s/base)
+apiVersion: v1
+kind: Service
+metadata:
+  name: your-service
+  labels:
+    app: your-service
+spec:
+  type: ClusterIP  # Use NodePort or LoadBalancer if external access is needed
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: your-service

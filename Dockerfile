@@ -22,7 +22,7 @@ FROM nginx:alpine
 # Step 8: Copy the build output to the NGINX web root directory
 COPY --from=build /client/build /usr/share/nginx/html
 
-# Step 9: Expose port 80 for the app
+# Step 9: Expose port 3000 for the app
 EXPOSE 80
 
 # Step 10: Start NGINX when the container starts
