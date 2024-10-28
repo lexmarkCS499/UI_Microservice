@@ -41,6 +41,11 @@ jobs:
           docker push lexmarkkubernetes/uiservice:$VERSION
 
       # Optional: Tag Image with dev and push (if you still want this)
+      - name: Tag Image with latest
+        run: |
+          docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:latest
+          docker push lexmarkkubernetes/uiservice:latest
+
       - name: Tag Image with dev
         run: |
           docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:dev
