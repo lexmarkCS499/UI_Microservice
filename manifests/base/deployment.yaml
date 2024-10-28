@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: ui-app
-          image: lexmarkkubernetes/ui-app:latest # Use the latest tag here or adjust as needed
+          image: lexmarkkubernetes/uiservice:latest # Use the latest tag here or adjust as needed
           ports:
             - containerPort: 80
