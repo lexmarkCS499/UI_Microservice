@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Testing changesEnter a name below to see how many times it's been entered!
+          Mo Money Mo Prolems Enter a name below to see how many times it's been entered!
         </p>
           <NameForm />
           <MyButton />
