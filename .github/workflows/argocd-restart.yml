@@ -1,0 +1,40 @@
+name: ArgoCD Restart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  argocd-restart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up environment variables
+        env:
+          ARGOCD_SERVER: "10.105.184.56"  # Replace with your actual Argo CD server address
+          ARGOCD_USERNAME: ${{ secrets.ARGOCD_USERNAME }}  # Use GitHub secrets for sensitive data
+          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}  # Use GitHub secrets for sensitive data
+          ARGOCD_APP_NAME: ${{ secrets.ARGOCD_APP_NAME }}  # Ensure ARGOCD_APP_NAME is set in your GitHub secrets
+        run: |
+          echo "ARGOCD_SERVER: $ARGOCD_SERVER"
+          echo "ARGOCD_APP_NAME: $ARGOCD_APP_NAME"
+          echo "ARGOCD_USERNAME: $ARGOCD_USERNAME"
+
+      - name: Log in to Argo CD
+        run: |
+          argocd login "${ARGOCD_SERVER}" --insecure --username "${ARGOCD_USERNAME}" --password "${ARGOCD_PASSWORD}"
+
+      - name: Run restart action
+        id: restart
+        run: |
+          argocd app actions run "$ARGOCD_APP_NAME" restart --kind Deployment | tee response.txt
+          
+      - name: Check response
+        run: |
+          if [ -s response.txt ]; then
+            echo "Error: Response file is not empty, indicating a failure."
+            exit 1
+          fi
