@@ -22,6 +22,7 @@ patches:
           spec:
             containers:
               - name: ui-container
+                imagePullPolicy: Always
                 env:
                   - name: ENV
                     value: "dev"
