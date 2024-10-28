@@ -1,11 +1,11 @@
 resources:
-  - ../../../base
+  - ../../base/UI
 
-namePrefix: dev-
+namePrefix: prod-
 
 images:
   - name: uiservice
-    newTag: latest-dev
+    newTag: latest-prod
 
 patches:
   - target:
@@ -24,4 +24,4 @@ patches:
               - name: ui-container
                 env:
                   - name: ENV
-                    value: "dev"
+                    value: "prod"

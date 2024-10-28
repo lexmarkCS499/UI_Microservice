@@ -1,14 +1,12 @@
-# service.yaml (in k8s/base)
 apiVersion: v1
 kind: Service
 metadata:
   name: ui-service
-  labels:
-    app: ui-service
 spec:
-  type: ClusterIP  # Use NodePort or LoadBalancer if external access is needed
-  ports:
-    - port: 80
-      targetPort: 80
   selector:
-    app: ui-service
+    app: ui
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80
+  type: ClusterIP
