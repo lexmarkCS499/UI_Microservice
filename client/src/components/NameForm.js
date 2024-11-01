@@ -17,7 +17,7 @@ const NameForm = () => {
         const response = await axios.get(`http://localhost:3001/items/count?name=${name}`);
         console.log(response.data)
         setCount(response.data.count); // This is now just a number
-        setError(''); // Clear any previous error
+        setError(''); // Clear any previous error 
     } catch (err) {
         setError('Error fetching the count. Please try again.');
         setCount(null); // Reset count in case of error
