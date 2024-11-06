@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+        - name: ui-container
+          image: lexmarkkubernetes/uiservice:bff8f605886005f900af0c2b416b7246df669cdf
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
