@@ -64,7 +64,7 @@ jobs:
         run: |
           git config --global user.name "Kamal Ghimire"
           git config --global user.email "kamalghimire121@gmail.com"
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/lexmarkResource.git
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/UI_Microservice.git
           
           if ! git diff --quiet; then
             git commit -am "Update Docker image to lexmarkkubernetes/uiservice:dev"
