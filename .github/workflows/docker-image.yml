@@ -73,8 +73,33 @@ jobs:
             echo "No changes to commit"
           fi
 
-  deploy:
+  update-parent-repo:
+    runs-on: ubuntu-latest
     needs: build-and-deploy
+    steps:
+      - name: Checkout submodule repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true  # Ensures submodules are also cloned
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "Hunter-Abshire"
+          git config --global user.email "hunter.abshire17@yahoo.com"
+
+      - name: Clone Parent Repository
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git clone https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git
+          cd Lexmark
+          git submodule update --remote --merge UI_Microservice  # Update specific submodule
+          git add UI_Microservice
+          git commit -m "Update submodule reference to latest commit"
+          git push origin dev
+  
+  deploy:
+    needs: update-parent-repo
     runs-on: ubuntu-latest
 
     steps:
@@ -92,7 +117,7 @@ jobs:
           ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
         run: |
           if [ "${{ github.ref_name }}" == "dev" ]; then
-            ./argocd app sync dev-uiservice --server $ARGOCD_SERVER --auth-token $ARGOCD_TOKEN --grpc-web --prune
+            ./argocd app sync my-micro-services-app-dev --server $ARGOCD_SERVER --auth-token $ARGOCD_TOKEN --grpc-web --prune
           elif [ "${{ github.ref_name }}" == "staging" ]; then
             ./argocd app sync staging-uiservice --server $ARGOCD_SERVER --auth-token $ARGOCD_TOKEN --grpc-web --prune
           elif [ "${{ github.ref_name }}" == "prod" ]; then
