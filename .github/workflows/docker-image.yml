@@ -106,7 +106,7 @@ jobs:
           git clone -b dev https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git
           git remote set-url origin https://${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/UI_Microservice.git
           cd Lexmark
-          git submodule update --init --merge UI_Microservice
+          git submodule update --init --remote --merge UI_Microservice
           git add UI_Microservice
           if [[ $(git status --porcelain) ]]; then
             git commit -m "Committing changes"
