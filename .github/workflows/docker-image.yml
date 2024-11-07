@@ -93,8 +93,8 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           echo "Testing access to Lexmark repository with provided GH_TOKEN"
-          curl -I -H "Authorization: token ${GH_TOKEN}" https://api.github.com/repos/lexmarkCS499/Lexmark
-          curl -I -H "Authorization: token ${GH_TOKEN}" https://api.github.com/
+          curl -I -H "Authorization: token ${{ secrets.PAT_TOKEN }}" https://api.github.com/repos/lexmarkCS499/Lexmark
+          curl -I -H "Authorization: token ${{ secrets.PAT_TOKEN }}" https://api.github.com/
           # The response header should return a 200 if authorized, 403 if unauthorized
 
       - name: Clone Parent Repository
@@ -102,12 +102,12 @@ jobs:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           echo "Cloning Lexmark repository..."
-          git clone -b dev https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git
+          git clone -b dev https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/Lexmark.git
           cd Lexmark
           git submodule update --init --merge UI_Microservice
           git add UI_Microservice
           git commit -m "Update submodule reference to latest commit"
-          git push https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git dev
+          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/Lexmark.git dev
 
   
   deploy:
