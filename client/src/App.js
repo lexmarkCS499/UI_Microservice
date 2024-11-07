@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Enter a name maybe below to see how many times it's been entered! this should make a new pod testing some change
+          Enter a name maybe below to see how many times it's been entered!
         </p>
           <NameForm />
           <MyButton />
