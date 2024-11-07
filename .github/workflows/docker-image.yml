@@ -103,6 +103,7 @@ jobs:
         run: |
           echo "Cloning Lexmark repository..."
           git clone -b dev https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/Lexmark.git
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/UI_Microservice.git
           cd Lexmark
           git submodule update --init --merge UI_Microservice
           git add UI_Microservice
