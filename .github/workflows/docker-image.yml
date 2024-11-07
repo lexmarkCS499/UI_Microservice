@@ -94,6 +94,7 @@ jobs:
         run: |
           echo "Testing access to Lexmark repository with provided GH_TOKEN"
           curl -I -H "Authorization: token ${GH_TOKEN}" https://api.github.com/repos/lexmarkCS499/Lexmark
+          curl -I -H "Authorization: token ${GH_TOKEN}" https://api.github.com/
           # The response header should return a 200 if authorized, 403 if unauthorized
 
       - name: Clone Parent Repository
