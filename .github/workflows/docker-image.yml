@@ -86,6 +86,7 @@ jobs:
         run: |
           git config --global user.name "Hunter-Abshire"
           git config --global user.email "hunter.abshire17@yahoo.com"
+          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/UI_Microservice.git
 
       - name: Clone Parent Repository
         env:
