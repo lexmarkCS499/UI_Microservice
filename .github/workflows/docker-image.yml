@@ -91,7 +91,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git clone -b dev https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git
+          git clone -b dev https://x-access-token:${PAT_TOKEN}@github.com/lexmarkCS499/Lexmark.git
           cd Lexmark
           git submodule update --remote --init --merge UI_Microservice  # Update specific submodule
           git add UI_Microservice
