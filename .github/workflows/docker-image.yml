@@ -108,7 +108,12 @@ jobs:
           cd Lexmark
           git submodule update --init --merge UI_Microservice
           git add UI_Microservice
-          git commit -m "Update submodule reference to latest commit"
+          if [[ $(git status --porcelain) ]]; then
+            git commit -m "Committing changes"
+          else
+            echo "No changes to commit, skipping commit."
+          fi
+
           git push https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git dev
 
   
