@@ -80,23 +80,34 @@ jobs:
       - name: Checkout submodule repository
         uses: actions/checkout@v3
         with:
-          submodules: true  # Ensures submodules are also cloned
+          submodules: true
 
       - name: Configure Git
         run: |
           git config --global user.name "Hunter-Abshire"
           git config --global user.email "hunter.abshire17@yahoo.com"
+          git config --global --list  # List git config to verify
+
+      - name: Verify Token Access (Debug Step)
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          echo "Testing access to Lexmark repository with provided GH_TOKEN"
+          curl -I -H "Authorization: token ${GH_TOKEN}" https://api.github.com/repos/lexmarkCS499/Lexmark
+          # The response header should return a 200 if authorized, 403 if unauthorized
 
       - name: Clone Parent Repository
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
+          echo "Cloning Lexmark repository..."
           git clone -b dev https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git
           cd Lexmark
-          git submodule update --init --merge UI_Microservice  # Update specific submodule
+          git submodule update --init --merge UI_Microservice
           git add UI_Microservice
           git commit -m "Update submodule reference to latest commit"
           git push https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git dev
+
   
   deploy:
     needs: update-parent-repo
