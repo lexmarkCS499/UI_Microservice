@@ -93,6 +93,7 @@ jobs:
           GH_TOKEN: ${{ secrets.HUNTER_PAT }}
         run: |
           echo "Testing access to Lexmark repository with provided GH_TOKEN"
+          echo "The token is: ${{ secrets.HUNTER_PAT }}"
           curl -I -H "Authorization: token ${{ secrets.HUNTER_PAT }}" https://api.github.com/repos/lexmarkCS499/Lexmark
           curl -I -H "Authorization: token ${{ secrets.HUNTER_PAT }}" https://api.github.com/
           # The response header should return a 200 if authorized, 403 if unauthorized
