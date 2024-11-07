@@ -91,13 +91,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/Lexmark.git
           git clone -b dev https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git
           cd Lexmark
           git submodule update --remote --init --merge UI_Microservice  # Update specific submodule
           git add UI_Microservice
           git commit -m "Update submodule reference to latest commit"
-          git push origin dev
+          git push https://x-access-token:${GH_TOKEN}@github.com/lexmarkCS499/Lexmark.git dev
   
   deploy:
     needs: update-parent-repo
