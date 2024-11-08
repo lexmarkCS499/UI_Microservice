@@ -3,7 +3,6 @@ name: Build, Push Docker Image, and Deploy to Minikube
 on:
   push:
     branches:
-      - main  # Run the workflow when code is pushed to the main branch
       - dev
 
 jobs:
@@ -105,8 +104,8 @@ jobs:
         run: |
           echo "Cloning Lexmark repository..."
           git clone -b dev https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git
-          git remote set-url origin https://${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/UI_Microservice.git
           cd Lexmark
+          git config -f .gitmodules submodule.UI_Microservice.branch dev
           git submodule update --init --remote --merge UI_Microservice
           git add UI_Microservice
           if [[ $(git status --porcelain) ]]; then
