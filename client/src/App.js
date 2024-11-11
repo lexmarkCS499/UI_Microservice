@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Enter a name below to see how many times it's been entered! Testing a change.
+          Enter a name below to see how many times it's been entered! Creating a change in the UI.
         </p>
           <NameForm />
           <MyButton />
