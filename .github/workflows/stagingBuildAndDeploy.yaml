@@ -67,6 +67,7 @@ jobs:
           git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/UI_Microservice.git
           
           if ! git diff --quiet; then
+            git fetch origin
             git checkout staging
             git commit -am "Update Docker image to lexmarkkubernetes/uiservice-staging:latest"
             git push origin staging
