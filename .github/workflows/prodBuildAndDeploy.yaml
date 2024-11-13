@@ -1,9 +1,9 @@
 name: Build, Push Docker Image, and Deploy to Minikube
 
 on:
-  push:
+  pull_request:
     branches:
-      - dev
+      - prod
 
 jobs:
   build:
@@ -27,11 +27,11 @@ jobs:
 
       # Step 4: Build the Docker image
       - name: Build Docker Image
-        run: docker build -t lexmarkkubernetes/uiservice-dev:${{ github.sha }} .
+        run: docker build -t lexmarkkubernetes/uiservice-prod:${{ github.sha }} .
 
       # Step 5: Push the Docker image to Docker Hub
       - name: Push Docker Image
-        run: docker push lexmarkkubernetes/uiservice-dev:${{ github.sha }}
+        run: docker push lexmarkkubernetes/uiservice-prod:${{ github.sha }}
 
       # # Step 6: Tag the image with a version
       # - name: Tag Image with version
@@ -43,8 +43,8 @@ jobs:
       # Tag Image with latest
       - name: Tag Image with latest
         run: |
-          docker tag lexmarkkubernetes/uiservice-dev:${{ github.sha }} lexmarkkubernetes/uiservice-dev:latest
-          docker push lexmarkkubernetes/uiservice-dev:latest
+          docker tag lexmarkkubernetes/uiservice-prod:${{ github.sha }} lexmarkkubernetes/uiservice-prod:latest
+          docker push lexmarkkubernetes/uiservice-prod:latest
 
       # # Tag Image with dev
       # - name: Tag Image with dev
@@ -55,7 +55,7 @@ jobs:
       # Step 7: Update Kubernetes manifest with the new Docker image tag
       - name: Update Kubernetes Manifest
         run: |
-          sed -i "s|image: lexmarkkubernetes/uiservice-dev:.*|image: lexmarkkubernetes/uiservice-dev:${{ github.sha }}|g" manifests/deployment.yaml
+          sed -i "s|image: lexmarkkubernetes/uiservice-prod:.*|image: lexmarkkubernetes/uiservice-prod:${{ github.sha }}|g" manifests/deployment.yaml
 
       # Step 8: Commit and push the updated manifest
       - name: Commit and push changes if any
@@ -67,7 +67,7 @@ jobs:
           git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/UI_Microservice.git
           
           if ! git diff --quiet; then
-            git commit -am "Update Docker image to lexmarkkubernetes/uiservice:dev"
+            git commit -am "Update Docker image to lexmarkkubernetes/uiservice-prod:latest"
             git push origin dev
           else
             echo "No changes to commit"
