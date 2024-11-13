@@ -1,7 +1,7 @@
 name: Build, Push Docker Image, and Deploy to Minikube
 
 on:
-  pull_request:
+  push:
     branches:
       - staging
 
@@ -67,8 +67,10 @@ jobs:
           git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/lexmarkCS499/UI_Microservice.git
           
           if ! git diff --quiet; then
+            git fetch origin
+            git checkout staging
             git commit -am "Update Docker image to lexmarkkubernetes/uiservice-staging:latest"
-            git push origin dev
+            git push origin staging
           else
             echo "No changes to commit"
           fi
@@ -103,9 +105,9 @@ jobs:
           GH_TOKEN: ${{ secrets.HUNTER_PAT }}
         run: |
           echo "Cloning Lexmark repository..."
-          git clone -b dev https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git
+          git clone -b staging https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git
           cd Lexmark
-          git config -f .gitmodules submodule.UI_Microservice.branch dev
+          git config -f .gitmodules submodule.UI_Microservice.branch staging
           git submodule update --init --remote --merge UI_Microservice
           git add UI_Microservice
           if [[ $(git status --porcelain) ]]; then
@@ -114,7 +116,7 @@ jobs:
             echo "No changes to commit, skipping commit."
           fi
 
-          git push https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git dev
+          git push https://x-access-token:${{ secrets.HUNTER_PAT }}@github.com/lexmarkCS499/Lexmark.git staging
 
   
   # deploy:
