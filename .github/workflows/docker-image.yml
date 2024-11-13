@@ -31,14 +31,14 @@ jobs:
 
       # Step 5: Push the Docker image to Docker Hub
       - name: Push Docker Image
-        run: docker push lexmarkkubernetes/uiservice:${{ github.sha }}
+        run: docker push lexmarkkubernetes/uiservice-dev:${{ github.sha }}
 
-      # Step 6: Tag the image with a version
-      - name: Tag Image with version
-        run: |
-          VERSION=v1.0.$(echo ${{ github.run_number }})
-          docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:$VERSION
-          docker push lexmarkkubernetes/uiservice:$VERSION
+      # # Step 6: Tag the image with a version
+      # - name: Tag Image with version
+      #   run: |
+      #     VERSION=v1.0.$(echo ${{ github.run_number }})
+      #     docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:$VERSION
+      #     docker push lexmarkkubernetes/uiservice:$VERSION
 
       # Tag Image with latest
       - name: Tag Image with latest
@@ -46,16 +46,16 @@ jobs:
           docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:latest
           docker push lexmarkkubernetes/uiservice:latest
 
-      # Tag Image with dev
-      - name: Tag Image with dev
-        run: |
-          docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:dev
-          docker push lexmarkkubernetes/uiservice:dev
+      # # Tag Image with dev
+      # - name: Tag Image with dev
+      #   run: |
+      #     docker tag lexmarkkubernetes/uiservice:${{ github.sha }} lexmarkkubernetes/uiservice:dev
+      #     docker push lexmarkkubernetes/uiservice:dev
 
       # Step 7: Update Kubernetes manifest with the new Docker image tag
       - name: Update Kubernetes Manifest
         run: |
-          sed -i "s|image: lexmarkkubernetes/uiservice:.*|image: lexmarkkubernetes/uiservice:${{ github.sha }}|g" manifests/deployment.yaml
+          sed -i "s|image: lexmarkkubernetes/uiservice:.*|image: lexmarkkubernetes/uiservice-dev:${{ github.sha }}|g" manifests/deployment.yaml
 
       # Step 8: Commit and push the updated manifest
       - name: Commit and push changes if any
