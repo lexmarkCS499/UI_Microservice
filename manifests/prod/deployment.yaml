@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui-container
-          image: lexmarkkubernetes/uiservice-prod:9c0382beb6370432928170343e2814891de25c8b
+          image: lexmarkkubernetes/uiservice-prod:23fdda6b885d7aa6f054cf174d02983edfc2fa7a
           imagePullPolicy: Always
           ports:
             - containerPort: 80
