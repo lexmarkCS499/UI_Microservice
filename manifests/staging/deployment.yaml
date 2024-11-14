@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ui-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: ui
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ui-container
-          image: lexmarkkubernetes/uiservice-staging:98d6d5edb99ece33579696b7e8e6d2c716cca5d0
+          image: lexmarkkubernetes/uiservice-staging:7d6f142646ade5f7328491413363f37bc919fd5a
           imagePullPolicy: Always
           ports:
             - containerPort: 80
