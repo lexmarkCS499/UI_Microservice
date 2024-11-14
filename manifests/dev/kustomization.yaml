@@ -7,8 +7,8 @@ resources:
   - service.yaml
 
 images:
-  - name: docker.io/lexmarkkubernetes/uiservice
-    newName: docker.io/lexmarkkubernetes/uiservice
+  - name: docker.io/lexmarkkubernetes/uiservice-dev
+    newName: docker.io/lexmarkkubernetes/uiservice-dev
     newTag: latest  # Set the specific tag here if needed (e.g., "v1.0.0")
 
 # Optional: add any common labels for easier management
