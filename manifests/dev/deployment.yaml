@@ -8,7 +8,7 @@ spec:
     canary:
       steps:
         - setWeight: 50
-        - pause: {duration: "infinite"}  # Manual intervention here
+        - pause: {duration: "4m"}  # Manual intervention here
         - setWeight: 100
   selector:
     matchLabels:
