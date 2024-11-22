@@ -1,9 +1,15 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
-  name: ui-deployment
+  name: ui-rollout
 spec:
-  replicas: 2
+  replicas: 3
+  strategy:
+    canary:
+      steps:
+        - setWeight: 50
+        - pause: {duration: "infinite"}  # Manual intervention here
+        - setWeight: 100
   selector:
     matchLabels:
       app: ui
